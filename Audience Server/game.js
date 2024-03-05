@@ -67,9 +67,9 @@ class Game {
 }
 
 const GameStates = {
-	WAITING: 0,
-	STARTED: 1,
-	ENDED: 2
+	WAITING: 'waiting',
+	STARTED: 'started',
+	ENDED: 'ended'
 }
 
 module.exports = {

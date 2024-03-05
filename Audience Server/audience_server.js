@@ -35,11 +35,12 @@ function handleUnityClientConnection(data, ws) {
     console.log(`Unity client connected with game code: ${data.gameCode}`);
 
     // Create new game
-    games.push(new Game(ws, data.gameCode));
+    const game = new Game(ws, data.gameCode)
+    games.push(game);
 
     // Update message listeners
     ws.removeAllListeners('message');
-    ws.on('message', handleGameMessages);
+    ws.on('message', (message) => handleGameMessages(message, game));
 }
 
 function handleAudienceClientConnection(data, ws) {
@@ -50,8 +51,9 @@ function handleAudienceClientConnection(data, ws) {
 
     // Game exists and is in the waiting state
     if (game) {
-        if(!game.gameState === GameStates.WAITING) {
+        if(game.gameState === GameStates.STARTED) {
             console.log('Game has started, joining disabled');
+            ws.close();
             return;
         }
 
@@ -93,8 +95,12 @@ function parseMessage(message) {
     }
 }
 
-function handleGameMessages(message) {
+function handleGameMessages(message, game) {
 	const data = parseMessage(message);
+
+    if(data.type === GameStates.STARTED) {
+        game.gameState = GameStates.STARTED;
+    }
 }
 
 function handleAudienceMessages(message) {
