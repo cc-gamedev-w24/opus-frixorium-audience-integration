@@ -1,45 +1,78 @@
 class Game {
-	#gameCode;
-	#playerList;
-	#unityClient
+    #gameCode;
+    #audienceList;
+    #unityClient;
+	#gameState;
 
-	constructor(unityClient, gameCode) {
-		this.#unityClient = unityClient;
-		this.#gameCode = gameCode;
-		this.#playerList = [];
+    constructor(unityClient, gameCode) {
+        this.#unityClient = unityClient;
+        this.#gameCode = gameCode;
+        this.#audienceList = {};
+		this.#gameState = GameStates.WAITING;
+    }
+
+	// Game code getter
+    get gameCode() {
+        return this.#gameCode;
+    }
+
+	// Player List getter
+    get audienceList() {
+        return this.#audienceList;
+    }
+
+	// Unity client getter
+    get unityClient() {
+        return this.#unityClient;
+    }
+
+	// Game state getter
+	get gameState() {
+		return this.#gameState;
+	}
+	
+	// Game state setter
+	set gameState(newState) {
+		this.#gameState = newState;
 	}
 
-	get gameCode () {
-		return this.#gameCode;
-	}
+	// Handles adding audience members to list
+    addPlayerToGame(identifier, socket) {
+		// Player isn't already in the game
+        if (!this.#audienceList[identifier]) {
+			// Add player and socket to the list
+            this.#audienceList[identifier] = socket;
 
-	get playerList() {
-		return this.#playerList;
-	}
-
-	get unityClient() {
-		return this.#unityClient;
-	}
-
-	addPlayerToGame(identifier, socket) {
-		if (!this.#playerList[identifier]) {
-            this.#playerList[identifier] = socket; // Store the WebSocket connection associated with the player ID
-			this.#unityClient.send('new_connection');
+			// Update the player count in unity
+            this.#unityClient.send('new_connection');
             console.log(`Player ${identifier} added to the game`);
         } else {
             console.log(`Player ${identifier} already exists in the game`);
         }
-	}
+    }
 
-	removePlayerFromGame(playerId) {
-		if (this.#playerList[playerId]) {
-            delete this.#playerList[playerId]; // Remove the player from the object
-			this.#unityClient.send('client_disconnected');
-            console.log(`Player ${playerId} removed from the game`);
+    removePlayerFromGame(identifier) {
+		// Player is in the game
+        if (this.#audienceList[identifier]) {
+			// Delete player from list
+            delete this.#audienceList[identifier];
+
+			// Update player count in unity
+            this.#unityClient.send('client_disconnected');
+            console.log(`Player ${identifier} removed from the game`);
         } else {
-            console.log(`Player ${playerId} does not exist in the game`);
+            console.log(`Player ${identifier} does not exist in the game`);
         }
-	}
+    }
 }
 
-module.exports = Game;
+const GameStates = {
+	WAITING: 0,
+	STARTED: 1,
+	ENDED: 2
+}
+
+module.exports = {
+	Game,
+	GameStates
+}
