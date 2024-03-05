@@ -1,0 +1,9 @@
+{
+  "short_name": "Opus Frixorium",
+  "name": "Opus Frixorium Audience Integration",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
