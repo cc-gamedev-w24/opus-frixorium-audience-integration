@@ -87,6 +87,7 @@ function handleCloseConnection(data) {
 
 function parseMessage(message) {
     try {
+        // Parse the incoming json
         const data = JSON.parse(message);
         return data;
     } catch (error) {
@@ -96,10 +97,22 @@ function parseMessage(message) {
 }
 
 function handleGameMessages(message, game) {
+    // Parse the incoming message
 	const data = parseMessage(message);
 
+    // Game started
     if(data.type === GameStates.STARTED) {
         game.gameState = GameStates.STARTED;
+        console.log(`Game ${game.gameCode} has started. Joining disabled`);
+    } else if (data.type === 'vote') { // voting started
+        // Send voting options to all clients
+        for(const identifier in game.audienceList) {
+            if(game.audienceList.hasOwnProperty(identifier)) {
+                const ws = game.audienceList[identifier];
+                // TODO: Implement voting options
+                ws.send('Test');
+            }
+        }
     }
 }
 
