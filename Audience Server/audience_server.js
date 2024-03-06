@@ -1,6 +1,6 @@
 const {Game, GameStates} = require('./game');
 const WebSocket = require('ws');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const wss = new WebSocket.Server({ port: PORT });
 const games = [];
 
@@ -17,7 +17,7 @@ wss.on('connection', (ws, req) => {
         const data = parseMessage(message);
 
         // Unity client connecting
-        if (data.type === 'authentication' && data.token === 'BTS02OQVKJ') {
+        if (data.messageType === 'authentication' && data.token === 'BTS02OQVKJ') {
             handleUnityClientConnection(data, ws);
         } else { // audience member connecting
             handleAudienceClientConnection(data, ws);
@@ -73,7 +73,7 @@ function handleCloseConnection(data) {
     // Game exists
     if (game) {
         // if the disconnecting client is unity, delete the game
-        if (data.type === 'authentication') {
+        if (data.messageType === 'authentication') {
             const index = games.indexOf(game);
             if (index > -1) {
                 games.splice(index, 1);
@@ -99,18 +99,19 @@ function parseMessage(message) {
 function handleGameMessages(message, game) {
     // Parse the incoming message
 	const data = parseMessage(message);
-
+    console.log(data);
+    
     // Game started
-    if(data.type === GameStates.STARTED) {
+    if(data.messageType === GameStates.STARTED) {
         game.gameState = GameStates.STARTED;
         console.log(`Game ${game.gameCode} has started. Joining disabled`);
-    } else if (data.type === 'vote') { // voting started
+    } else if (data.messageType === 'vote') { // voting started
         // Send voting options to all clients
         for(const identifier in game.audienceList) {
             if(game.audienceList.hasOwnProperty(identifier)) {
                 const ws = game.audienceList[identifier];
                 // TODO: Implement voting options
-                ws.send('Test');
+                ws.send('vote');
             }
         }
     }
