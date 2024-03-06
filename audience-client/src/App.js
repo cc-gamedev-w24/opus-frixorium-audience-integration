@@ -9,33 +9,42 @@ function App() {
     const [showVoteCards, setShowVoteCards] = useState(false);
     const [trialNames, setTrialNames] = useState([]);
     const [ws, setWs] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     function connectToGame() {
-        if (!ws) {
-            const connectionData = {
-                type: "game_client",
-                token: "8DFMUBI21Y",
-                gameCode: gameCode,
-                identifier: name
-            };
-
-            const websocket = new WebSocket("ws://localhost:8080");
-            websocket.onopen = function () {
-                console.log("Connected to audience server");
-                websocket.send(JSON.stringify(connectionData));
-                setConnected(true);
-            };
-            websocket.onmessage = function (event) {
-                var jsonData = JSON.parse(event.data);
-                console.log(jsonData);
-                if (jsonData.messageType === 'voting') {
-                    setTrialNames(jsonData.trialNames);
-                    setShowVoteCards(true);
-                }
-            };
-            setWs(websocket);
+        // Close the existing WebSocket connection if it exists
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.close();
+            setWs(null); // Reset WebSocket state
         }
-    }
+    
+        const connectionData = {
+            type: "game_client",
+            token: "8DFMUBI21Y",
+            gameCode: gameCode,
+            identifier: name
+        };
+    
+        const websocket = new WebSocket("ws://localhost:8080");
+        websocket.onopen = () => {
+            console.log("Connected to audience server");
+            websocket.send(JSON.stringify(connectionData));
+            setConnected(true);
+        };
+    
+        websocket.onmessage = (event) => {
+            var jsonData = JSON.parse(event.data);
+            console.log(jsonData);
+            if (jsonData.messageType === 'voting') {
+                setTrialNames(jsonData.trialNames);
+                setShowVoteCards(true);
+            } else if (jsonData.messageType === 'no_game_found') {
+                setErrorMessage('No game found with the provided code. Please try again.');
+            }
+        };
+    
+        setWs(websocket);
+    }    
 
     function sendVote(trialName) {
         // Construct vote data
@@ -52,7 +61,7 @@ function App() {
     }
 
     return (
-        <div>
+        <div className='container'>
             <header>
                 <h1>Opus Frixorium</h1>
             </header>
@@ -66,8 +75,16 @@ function App() {
                 />
             ) : showVoteCards ? (
                 <VoteCards trialNames={trialNames} sendVote={sendVote} />
+            ) : errorMessage && connected ? (
+                <div className="error-message">
+                    <p>{errorMessage}</p>
+                    <button onClick={() => {
+                        setErrorMessage('')
+                        setConnected(false);
+                    }}>Dismiss</button>
+                </div>
             ) : (
-                <h1> Waiting for voting to start...</h1>
+                <h2> Waiting for voting to start...</h2>
             )}
         </div>
     );

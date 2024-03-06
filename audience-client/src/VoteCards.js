@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css'
 
 function VoteCards({ trialNames, sendVote }) {
     const handleVote = (trialName) => {
@@ -9,7 +10,7 @@ function VoteCards({ trialNames, sendVote }) {
     return (
         <div>
             <h2>Vote for your choice:</h2>
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+            <div>
                 {trialNames.map((trialName, index) => (
                     <div className="card" key={index}>
                         <p>{trialName}</p>
