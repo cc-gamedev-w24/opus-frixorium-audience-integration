@@ -1,13 +1,21 @@
 import React from 'react';
 
-function VoteCards() {
+function VoteCards({ trialNames, sendVote }) {
+    const handleVote = (trialName) => {
+        // Send the vote information over WebSocket
+        sendVote(trialName);
+    };
+
     return (
         <div>
             <h2>Vote for your choice:</h2>
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                <div className="card">Choice 1</div>
-                <div className="card">Choice 2</div>
-                <div className="card">Choice 3</div>
+                {trialNames.map((trialName, index) => (
+                    <div className="card" key={index}>
+                        <p>{trialName}</p>
+                        <button onClick={() => handleVote(trialName)}>Vote</button>
+                    </div>
+                ))}
             </div>
         </div>
     );

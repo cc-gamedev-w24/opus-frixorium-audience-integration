@@ -62,7 +62,7 @@ function handleAudienceClientConnection(data, ws) {
 
         // Update message listeners
         ws.removeAllListeners('message');
-        ws.on('message', handleAudienceMessages);
+        ws.on('message', (message) => handleAudienceMessages(message, game));
     }
 }
 
@@ -99,26 +99,27 @@ function parseMessage(message) {
 function handleGameMessages(message, game) {
     // Parse the incoming message
 	const data = parseMessage(message);
-    console.log(data);
     
     // Game started
     if(data.messageType === GameStates.STARTED) {
         game.gameState = GameStates.STARTED;
         console.log(`Game ${game.gameCode} has started. Joining disabled`);
-    } else if (data.messageType === 'vote') { // voting started
+    } else if (data.messageType === 'voting') { // voting started
         // Send voting options to all clients
+        // TODO: Send vote options to client
+        console.log(data);
         for(const identifier in game.audienceList) {
             if(game.audienceList.hasOwnProperty(identifier)) {
                 const ws = game.audienceList[identifier];
-                // TODO: Implement voting options
-                ws.send('vote');
+                ws.send(JSON.stringify(data));
             }
         }
     }
 }
 
-function handleAudienceMessages(message) {
-    console.log(message);
+function handleAudienceMessages(message, game) {
+    const jsonData = JSON.parse(message);
+    console.log(jsonData);
 }
 
 console.log(`Server is running on port: ${PORT}`);

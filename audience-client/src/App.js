@@ -7,6 +7,7 @@ function App() {
     const [gameCode, setGameCode] = useState('');
     const [connected, setConnected] = useState(false);
     const [showVoteCards, setShowVoteCards] = useState(false);
+    const [trialNames, setTrialNames] = useState([]);
     const [ws, setWs] = useState(null);
 
     function connectToGame() {
@@ -25,12 +26,29 @@ function App() {
                 setConnected(true);
             };
             websocket.onmessage = function (event) {
-                if (event.data === 'vote') {
+                var jsonData = JSON.parse(event.data);
+                console.log(jsonData);
+                if (jsonData.messageType === 'voting') {
+                    setTrialNames(jsonData.trialNames);
                     setShowVoteCards(true);
                 }
             };
             setWs(websocket);
         }
+    }
+
+    function sendVote(trialName) {
+        // Construct vote data
+        const voteData = {
+            messageType: 'vote',
+            token: '8DFMUBI21Y',
+            gameCode: gameCode,
+            trialName: trialName
+        };
+
+        // Send vote data over WebSocket
+        ws.send(JSON.stringify(voteData));
+        setShowVoteCards(false);
     }
 
     return (
@@ -47,9 +65,9 @@ function App() {
                     connectToGame={connectToGame}
                 />
             ) : showVoteCards ? (
-                <VoteCards />
+                <VoteCards trialNames={trialNames} sendVote={sendVote} />
             ) : (
-                <h1> Waiting for game to start...</h1>
+                <h1> Waiting for voting to start...</h1>
             )}
         </div>
     );
