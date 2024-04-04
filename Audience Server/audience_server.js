@@ -1,7 +1,8 @@
 const { Game, GameStates } = require('./game');
 const WebSocket = require('ws');
-const PORT = process.env.PORT || 8080;
-const wss = new WebSocket.Server({ port: PORT });
+const PORT = process.env.PORT || 6124;
+const HOST = '0.0.0.0';
+const wss = new WebSocket.Server({ port: PORT, host: HOST });
 const games = [];
 let votesReceived = 0;
 
@@ -106,4 +107,4 @@ function handleAudienceMessages(message, game) {
     }
 }
 
-console.log(`Server is running on port: ${PORT}`);
+console.log(`Server is running on: ${HOST}:${PORT}`);

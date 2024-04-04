@@ -25,7 +25,7 @@ function App() {
             identifier: name
         };
     
-        const websocket = new WebSocket("ws://localhost:8080");
+        const websocket = new WebSocket("ws://142.114.24.73:6124");
         websocket.onopen = () => {
             console.log("Connected to audience server");
             websocket.send(JSON.stringify(connectionData));
@@ -63,7 +63,7 @@ function App() {
     return (
         <div className='container'>
             <header>
-                <h1>Opus Frixorium</h1>
+                <h1 className="title">Opus Frixorium</h1>
             </header>
             {!connected ? (
                 <WaitingScreen
@@ -84,7 +84,7 @@ function App() {
                     }}>Dismiss</button>
                 </div>
             ) : (
-                <h2> Waiting for voting to start...</h2>
+                <h2 className='card-container'> Waiting for voting to start...</h2>
             )}
         </div>
     );

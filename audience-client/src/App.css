@@ -1,27 +1,164 @@
+@font-face {
+    font-family: 'RomanSD'; 
+    src: url('../public/Roman\ SD.ttf') format('truetype');
+}
+
+body, header {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    background-color: #4254F4;
+}
+
+html {
+    background-color: #0A1420; /* Dark grey background */
+    font-family: 'RomanSD', sans-serif; /* Use your custom font */
+}
+
 .container {
     text-align: center;
 }
+
+.title {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px; /* Adjust as needed */
+    color: white;
+    font-family: 'RomanSD', sans-serif; /* Use your custom font */
+}
+
+.title:hover {
+    cursor: default;
+}
+
 
 .card {
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px;
     cursor: pointer;
-    background-color: #f9f9f9;
 }
 
 .card p {
     margin: 0;
 }
 
-/* Media query for mobile devices */
+.card-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button {
+    border-radius: 15px; /* Adjust border-radius for rounding buttons */
+    padding: 8px 16px;
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+    border: none;
+}
+
+.button:hover {
+    background-color: #555; /* Change color on hover if desired */
+}
+
+/* Adjustments for mobile devices */
 @media only screen and (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-    
     .card {
-        width: 80%;
-        margin: 10px auto;
+        width: 90%; /* Adjust width for smaller screens */
+        margin: 10px auto; /* Center the cards */
     }
+
+    .title {
+        font-size: 3vw; /* Adjust font size for smaller screens */
+    }
+
+    .text-box {
+        width: 5%; /* Adjust width for smaller screens */
+        max-width: 300px; /* Set a maximum width for better readability */
+    }
+
+    .play-btn {
+        width: 10%; /* Adjust width for smaller screens */
+    }
+
+    .waiting-screen {
+        position: absolute;
+    }
+}
+
+.waiting-screen {
+    position: absolute;
+    top: 18%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}   
+
+.inputFields {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputFields label {
+    font-size: 18px;
+    display: block; /* Display labels as block elements */
+    padding-bottom: 10px;
+    color: white;
+    padding-top: 10px;
+    font-weight: bold;
+    font-family: 'RomanSD', sans-serif; /* Use your custom font */
+}
+
+.text-box {
+    width: 20vw;
+    height: 30px; 
+    padding: 4px; 
+    background-color: #1F2937; 
+    border: none;
+    border-radius: 10px; 
+    color: #fff; 
+    font-size: 16px; 
+    padding-left: 10px;
+    font-weight: bold;
+    font-family: 'RomanSD';
+}
+
+.text-box:focus {
+    outline: none;
+}
+
+.play-btn {
+    margin-top: 20px;
+    width: 18vw;
+    text-align: center;
+    height: 4vh;
+    border-radius: 10px;
+    font-size: 20px;
+    background-color: #1F2937;
+    border: none;
+    color: white;
+    font-family: 'RomanSD', sans-serif; 
+    font-weight: bold;
+}
+
+.play-btn:hover {
+    background-color: #232e3e;
+    cursor: pointer;
+}
+
+.carousel-container {
+    position: absolute;
+    left: 50%;
+    top: 110%;
+    transform: translate(-50%, 0%);
 }

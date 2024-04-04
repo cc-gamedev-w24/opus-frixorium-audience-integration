@@ -65,12 +65,12 @@ class Game {
 
     handleVote(voteData, totalVotes) {
         const { trialName } = voteData;
-
+    
         if (this.#currentVotingTrials.hasOwnProperty(trialName)) {
             this.#currentVotingTrials[trialName]++;
             console.log(`Vote received for ${trialName}`);
-
-            if (Object.values(this.#currentVotingTrials).reduce((a, b) => a + b, 0) === totalVotes) {
+    
+            if (totalVotes === Object.keys(this.#audienceList).length) {
                 return true;
             } else {
                 return false;
@@ -79,7 +79,7 @@ class Game {
             console.log(`Invalid trial name: ${trialName}`);
             return false;
         }
-    }
+    }    
 
     handleVoteResult() {
         let maxVotes = 0;

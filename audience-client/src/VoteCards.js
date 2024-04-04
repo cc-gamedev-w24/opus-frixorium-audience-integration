@@ -8,7 +8,7 @@ function VoteCards({ trialNames, sendVote }) {
     };
 
     return (
-        <div>
+        <div className='card-container'>
             <h2>Vote for your choice:</h2>
             <div>
                 {trialNames.map((trialName, index) => (
