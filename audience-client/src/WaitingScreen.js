@@ -1,15 +1,11 @@
-// WaitingScreen.js
-
 import React from 'react';
-// index.js or App.js
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
 function WaitingScreen({ name, gameCode, setName, setGameCode, connectToGame }) {
     return (
         <div className='waiting-screen'>
             <div className='inputFields'>
-                <label htmlFor="game-code">Game Code</label>
+                <label htmlFor="game-code" className='game-code'>Game Code</label>
                 <input className='text-box' type="text" id="game-code" placeholder='Enter Room Code...' value={gameCode} onChange={(e) => setGameCode(e.target.value)} />
             </div>
             <div className='inputFields'>

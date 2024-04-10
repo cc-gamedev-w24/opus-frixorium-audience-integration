@@ -21,11 +21,11 @@ function App() {
         const connectionData = {
             type: "game_client",
             token: "8DFMUBI21Y",
-            gameCode: gameCode,
+            gameCode: gameCode.toUpperCase(),
             identifier: name
         };
     
-        const websocket = new WebSocket("ws://142.114.24.73:6124");
+        const websocket = new WebSocket("ws://192.168.2.135:6124");
         websocket.onopen = () => {
             console.log("Connected to audience server");
             websocket.send(JSON.stringify(connectionData));
@@ -40,6 +40,8 @@ function App() {
                 setShowVoteCards(true);
             } else if (jsonData.messageType === 'no_game_found') {
                 setErrorMessage('No game found with the provided code. Please try again.');
+            } else if (jsonData.messageType === 'game_ended') {
+                setErrorMessage('The game has ended. Thanks for playing!');
             }
         };
     
@@ -63,7 +65,7 @@ function App() {
     return (
         <div className='container'>
             <header>
-                <h1 className="title">Opus Frixorium</h1>
+                <h1 className="title">Chaos Vult</h1>
             </header>
             {!connected ? (
                 <WaitingScreen
@@ -76,15 +78,15 @@ function App() {
             ) : showVoteCards ? (
                 <VoteCards trialNames={trialNames} sendVote={sendVote} />
             ) : errorMessage && connected ? (
-                <div className="error-message">
+                <div className="card-container error-message">
                     <p>{errorMessage}</p>
-                    <button onClick={() => {
+                    <button className='button'  onClick={() => {
                         setErrorMessage('')
                         setConnected(false);
                     }}>Dismiss</button>
                 </div>
             ) : (
-                <h2 className='card-container'> Waiting for voting to start...</h2>
+                <h2 className='card-container error-message'> Waiting for voting to begin...</h2>
             )}
         </div>
     );
