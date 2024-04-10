@@ -65,7 +65,7 @@ function App() {
     return (
         <div className='container'>
             <header>
-                <h1 className="title">Opus Frixorium</h1>
+                <h1 className="title">Chaos Vult</h1>
             </header>
             {!connected ? (
                 <WaitingScreen

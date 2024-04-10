@@ -74,27 +74,40 @@ html {
     background-color: #555;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
     .card {
         width: 90%;
         margin: 10px auto;
     }
 
     .title {
-        font-size: 3vw;
+        font-size: 24px;
+        font-weight: bolder;
     }
 
-    .text-box {
-        width: 5%;
-        max-width: 300px;
+    .game-code {
+        margin-top: 10vh;
     }
 
-    .play-btn {
-        width: 10%;
+    .inputFields {
+        display: flex; /* Use flexbox */
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center; /* Center items horizontally */
     }
 
     .waiting-screen {
-        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; /* Center items vertically */
+        height: 40vh; /* Adjust height to take full viewport height */
+    }
+
+    .play-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: auto;
     }
 }
 
@@ -121,7 +134,7 @@ html {
 }
 
 .text-box {
-    width: 20vw;
+    width: auto;
     height: 30px; 
     padding: 4px; 
     background-color: #1F2937; 
