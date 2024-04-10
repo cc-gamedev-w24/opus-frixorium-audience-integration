@@ -18,8 +18,8 @@ header {
 }
 
 html {
-    background-color: #0A1420; /* Dark grey background */
-    font-family: 'RomanSD', sans-serif; /* Use your custom font */
+    background-color: #0A1420;
+    font-family: 'RomanSD', sans-serif;
 }
 
 .container {
@@ -31,25 +31,27 @@ html {
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 30px; /* Adjust as needed */
+    font-size: 30px;
     color: white;
-    font-family: 'RomanSD', sans-serif; /* Use your custom font */
+    font-family: 'RomanSD', sans-serif;
 }
 
 .title:hover {
     cursor: default;
 }
 
-
 .card {
+    font-family: 'RomanSD';
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px;
     cursor: pointer;
+    background: linear-gradient(to bottom, #4254F4, #4254F4);
 }
 
 .card p {
     margin: 0;
+    color: white;
 }
 
 .card-container {
@@ -60,7 +62,7 @@ html {
 }
 
 .button {
-    border-radius: 15px; /* Adjust border-radius for rounding buttons */
+    border-radius: 15px;
     padding: 8px 16px;
     cursor: pointer;
     background-color: #333;
@@ -69,27 +71,26 @@ html {
 }
 
 .button:hover {
-    background-color: #555; /* Change color on hover if desired */
+    background-color: #555;
 }
 
-/* Adjustments for mobile devices */
 @media only screen and (max-width: 600px) {
     .card {
-        width: 90%; /* Adjust width for smaller screens */
-        margin: 10px auto; /* Center the cards */
+        width: 90%;
+        margin: 10px auto;
     }
 
     .title {
-        font-size: 3vw; /* Adjust font size for smaller screens */
+        font-size: 3vw;
     }
 
     .text-box {
-        width: 5%; /* Adjust width for smaller screens */
-        max-width: 300px; /* Set a maximum width for better readability */
+        width: 5%;
+        max-width: 300px;
     }
 
     .play-btn {
-        width: 10%; /* Adjust width for smaller screens */
+        width: 10%;
     }
 
     .waiting-screen {
@@ -111,12 +112,12 @@ html {
 
 .inputFields label {
     font-size: 18px;
-    display: block; /* Display labels as block elements */
+    display: block;
     padding-bottom: 10px;
     color: white;
     padding-top: 10px;
     font-weight: bold;
-    font-family: 'RomanSD', sans-serif; /* Use your custom font */
+    font-family: 'RomanSD', sans-serif;
 }
 
 .text-box {
@@ -161,4 +162,9 @@ html {
     left: 50%;
     top: 110%;
     transform: translate(-50%, 0%);
+}
+
+.error-message {
+    color: white;
+    font-family: 'RomanSD';
 }

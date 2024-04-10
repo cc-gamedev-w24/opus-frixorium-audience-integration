@@ -1,8 +1,4 @@
-// WaitingScreen.js
-
 import React from 'react';
-// index.js or App.js
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
 function WaitingScreen({ name, gameCode, setName, setGameCode, connectToGame }) {

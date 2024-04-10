@@ -3,18 +3,17 @@ import './App.css'
 
 function VoteCards({ trialNames, sendVote }) {
     const handleVote = (trialName) => {
-        // Send the vote information over WebSocket
         sendVote(trialName);
     };
 
     return (
         <div className='card-container'>
-            <h2>Vote for your choice:</h2>
+            <h2 className='error-message' >Vote for your choice</h2>
             <div>
                 {trialNames.map((trialName, index) => (
                     <div className="card" key={index}>
                         <p>{trialName}</p>
-                        <button onClick={() => handleVote(trialName)}>Vote</button>
+                        <button className='button' onClick={() => handleVote(trialName)}>Vote</button>
                     </div>
                 ))}
             </div>

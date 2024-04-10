@@ -80,19 +80,29 @@ function parseMessage(message) {
 
 function handleGameMessages(message, game) {
     const data = parseMessage(message);
-    if (data.messageType === GameStates.STARTED) {
+
+    if (data.messageType === GameStates.STARTED) { // Game started, waiting for vote options
+        // Update game state
         game.gameState = GameStates.STARTED;
         console.log(`Game ${game.gameCode} has started. Joining disabled`);
-    } else if (data.messageType === 'voting') {
-        console.log(data);
-        for (const identifier in game.audienceList) {
-            if (game.audienceList.hasOwnProperty(identifier)) {
-                const ws = game.audienceList[identifier];
-                ws.send(JSON.stringify(data));
-            }
-        }
+    } else if (data.messageType === GameStates.VOTING) { // Voting started
+        sendMsgToClients(data, game);
+
         const { trialNames } = data;
         game.setVotingTrials(trialNames);
+    } else if(data.messageType === GameStates.ENDED) { // Game ended
+        sendMsgToClients(data, game);
+        console.log(data);
+    }
+}
+
+function sendMsgToClients(data, game) {
+    // Send vote options to clients
+    for (const identifier in game.audienceList) {
+        if (game.audienceList.hasOwnProperty(identifier)) {
+            const ws = game.audienceList[identifier];
+            ws.send(JSON.stringify(data));
+        }
     }
 }
 

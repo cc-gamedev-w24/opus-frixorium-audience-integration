@@ -116,9 +116,9 @@ class Game {
 }
 
 const GameStates = {
-    WAITING: 'waiting',
+    VOTING: 'voting',
     STARTED: 'started',
-    ENDED: 'ended'
+    ENDED: 'game_ended'
 };
 
 module.exports = {
