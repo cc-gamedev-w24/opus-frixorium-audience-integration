@@ -25,7 +25,7 @@ function App() {
             identifier: name
         };
     
-        const websocket = new WebSocket("ws://76.67.29.157:6124");
+        const websocket = new WebSocket("ws://192.168.2.10:6124");
         websocket.onopen = () => {
             console.log("Connected to audience server");
             websocket.send(JSON.stringify(connectionData));
@@ -42,6 +42,8 @@ function App() {
                 setErrorMessage('No game found with the provided code. Please try again.');
             } else if (jsonData.messageType === 'game_ended') {
                 setErrorMessage('The game has ended. Thanks for playing!');
+            } else if (jsonData.messageType === 'player_exists') {
+                setErrorMessage('Player with provided name already exists. Please try again.');
             }
         };
     

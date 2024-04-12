@@ -43,6 +43,13 @@ class Game {
             console.log(`Player ${identifier} added to the game`);
         } else {
             console.log(`Player ${identifier} already exists in the game`);
+            const msg = {
+                messageType: 'player_exists',
+                token: 'BTS02OQVKJ',
+                gameCode: this.#gameCode
+            };
+
+            socket.send(JSON.stringify(msg));
         }
     }
 
@@ -105,7 +112,7 @@ class Game {
         this.#unityClient.send(JSON.stringify(voteResultMessage));
     }
 
-    sendPlayerConnectionMessage(messageType, identifier) {
+    sendPlayerConnectionMessage(messageType) {
         const connectionData = {
             messageType: messageType,
             token: 'BTS02OQVKJ',
