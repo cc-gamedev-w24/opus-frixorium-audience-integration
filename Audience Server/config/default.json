@@ -1,0 +1,5 @@
+{
+  "ssl_cert_path": "/etc/letsencrypt/live/chaosvult.exvacuum.dev/fullchain.pem",
+  "ssl_key_path": "/etc/letsencrypt/live/chaosvult.exvacuum.dev/privkey.pem",
+  "port": 6124
+}

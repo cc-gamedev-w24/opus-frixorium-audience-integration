@@ -25,7 +25,7 @@ function App() {
             identifier: name
         };
     
-        const websocket = new WebSocket("ws://192.168.2.10:6124");
+        const websocket = new WebSocket("wss://chaosvult.exvacuum.dev:6124");
         websocket.onopen = () => {
             console.log("Connected to audience server");
             websocket.send(JSON.stringify(connectionData));
