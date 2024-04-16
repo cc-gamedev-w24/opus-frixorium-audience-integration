@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/opus-frixorium-audience-integration/static/css/main.d93ef1a1.css",
-    "main.js": "/opus-frixorium-audience-integration/static/js/main.1758cb8c.js",
+    "main.js": "/opus-frixorium-audience-integration/static/js/main.d882b211.js",
     "static/media/Roman SD.ttf": "/opus-frixorium-audience-integration/static/media/Roman SD.6772a8ef308112f0ae4c.ttf",
     "index.html": "/opus-frixorium-audience-integration/index.html",
     "main.d93ef1a1.css.map": "/opus-frixorium-audience-integration/static/css/main.d93ef1a1.css.map",
-    "main.1758cb8c.js.map": "/opus-frixorium-audience-integration/static/js/main.1758cb8c.js.map"
+    "main.d882b211.js.map": "/opus-frixorium-audience-integration/static/js/main.d882b211.js.map"
   },
   "entrypoints": [
     "static/css/main.d93ef1a1.css",
-    "static/js/main.1758cb8c.js"
+    "static/js/main.d882b211.js"
   ]
 }
