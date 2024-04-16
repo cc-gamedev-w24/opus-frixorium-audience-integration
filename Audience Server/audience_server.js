@@ -1,8 +1,18 @@
 const { Game, GameStates } = require('./game');
+const config = require('config');
 const WebSocket = require('ws');
-const PORT = process.env.PORT || 6124;
+const Https = require('https');
+const fs = require('fs');
 const HOST = '0.0.0.0';
-const wss = new WebSocket.Server({ port: PORT, host: HOST });
+
+const server = new Https.createServer({
+	cert: fs.readFileSync(config.ssl_cert_path),
+	key: fs.readFileSync(config.ssl_key_path)
+});
+const wss = new WebSocket.Server({
+	server: server,
+	host: HOST
+});
 const games = [];
 let votesReceived = 0;
 
@@ -27,6 +37,8 @@ wss.on('connection', (ws, req) => {
         });
     });
 });
+
+server.listen(config.port);
 
 function handleUnityClientConnection(data, ws) {
     console.log(`Unity client connected with game code: ${data.gameCode}`);
@@ -117,4 +129,4 @@ function handleAudienceMessages(message, game) {
     }
 }
 
-console.log(`Server is running on: ${HOST}:${PORT}`);
+console.log(`Server is running on: ${HOST}:${config.port}`);
